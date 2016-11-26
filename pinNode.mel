@@ -1,0 +1,61 @@
+proc pinNode() {
+
+
+	//—— ID the selected node and set a key ——//
+
+	string $ls[] = `ls -sl`;
+	string $node = $ls[ 0 ];
+
+	if (`size $node` > 0) {
+		print( "NODE BEING PINNED: "+ $node + "\n");
+	} else {
+		print( "WARNING: No node selected to pin\n" );
+		return;
+	}
+
+	setKeyframe -attribute "translateX";
+	setKeyframe -attribute "translateY";
+	setKeyframe -attribute "translateZ";
+	setKeyframe -attribute "rotateX";
+	setKeyframe -attribute "rotateY";
+	setKeyframe -attribute "rotateZ";
+
+
+
+	//—— Get worldspace transform info for the current frame ——//
+
+	float $translations[] = `xform -q -t -ws $node`;
+	float $rotations[] = `xform -q -ro -ws $node`;
+
+
+
+	//—— Go to the next frame ——//
+
+	undoInfo -stateWithoutFlush off;
+	nextOrPreviousFrame "next";
+	undoInfo -stateWithoutFlush on;
+
+
+
+	//—- Match worldspace transforms to the first frame —-//
+
+	xform -ws -t $translations[ 0 ] $translations[ 1 ] $translations[ 2 ];
+	xform -ws -ro $rotations[ 0 ] $rotations[ 1 ] $rotations[ 2 ];
+
+
+
+	//—— Set a key on the new frame ——//
+
+	setKeyframe -attribute "translateX";
+	setKeyframe -attribute "translateY";
+	setKeyframe -attribute "translateZ";
+	setKeyframe -attribute "rotateX";
+	setKeyframe -attribute "rotateY";
+	setKeyframe -attribute "rotateZ";
+
+
+
+}
+
+
+pinNode();
