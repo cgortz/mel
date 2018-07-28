@@ -1,0 +1,19 @@
+in the command area type:
+undoInfo -swf 0; 
+currentTime ( `currentTime -q` + 1 ); 
+undoInfo -swf 1;
+assign this to u'r next frame hotkey. Use the same procedure for the other commands:
+
+
+prev frame: 
+undoInfo -swf 0; 
+currentTime ( `currentTime -q` - 1 ); 
+undoInfo -swf 1;
+
+next key: undoInfo -swf 0; 
+currentTime -edit `findKeyframe -timeSlider -which next`; 
+undoInfo -swf 1;
+
+prev key: undoInfo -swf 0; 
+currentTime -edit `findKeyframe -timeSlider -which previous`; 
+undoInfo -swf 1;
