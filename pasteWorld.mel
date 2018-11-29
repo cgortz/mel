@@ -1,51 +1,97 @@
 //-- Verify node is selected --//
 
+
+
+
 string $ls[] = `ls -sl`;
+
 string $node = $ls[ 0 ];
 
+
+
 if (`size $node` > 0) {
+
 	
+
 	//-- A node is selected --//
+
 	//-- Verify copied info before pasting --//
 
+
+
 	if (`whatIs "$worldTranslations"` == "Unknown") {
+
 	
+
 		print "WARNING: You have to copy a world position before you can paste one.\n";
+
 	
+
 	} else {
+
 		
+
 		//-- Info has been copied. Ready to paste. --//
+
 		//—- Match worldspace transforms to the copied position —-//
-	
-		xform -ws -t $worldTranslations[ 0 ] $worldTranslations[ 1 ] $worldTranslations[ 2 ];
+
+
+		move -ws -rpr $worldTranslations[ 0 ] $worldTranslations[ 1 ] $worldTranslations[ 2 ];
+
 		xform -ws -ro $worldRotations[ 0 ] $worldRotations[ 1 ] $worldRotations[ 2 ];
+
+
+		
+
 	
+
+
 	
-	
+
 		//-- Set a key on the new frame --//
+
 	
+
 		setKeyframe -attribute "translateX";
+
 		setKeyframe -attribute "translateY";
+
 		setKeyframe -attribute "translateZ";
+
 		setKeyframe -attribute "rotateX";
+
 		setKeyframe -attribute "rotateY";
+
 		setKeyframe -attribute "rotateZ";
+
 		
+
 		print ("World location pasted. Trans: " 
+
 			+ $worldTranslations[0] + ", "
+
 			+ $worldTranslations[1] + ", "
+
 			+ $worldTranslations[2] + "; "
+
 			+ "Rot: " 
+
 			+ $worldRotations[0] + ", " 
+
 			+ $worldRotations[1] + ", "
+
 			+ $worldRotations[2] + ";" );
+
 		
+
 	}
+
 	
+
 	
+
 } else {
+
 	print( "WARNING: No node selected to paste position to\n" );
+
 }
-
-
-
