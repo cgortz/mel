@@ -1,42 +1,83 @@
 float $worldTranslations[];
+
 float $worldRotations[];
+
+
+
 
 //-- Verify Node is selected and set a key ——//
 
+
+
 string $ls[] = `ls -sl`;
+
 string $node = $ls[ 0 ];
+
+
+
 
 
 if (`size $node` > 0) {
 
+
+
 	print( "NODE BEING COPIED FROM: "+ $node + "\n");
+
 	
+
 	setKeyframe -attribute "translateX";
+
 	setKeyframe -attribute "translateY";
+
 	setKeyframe -attribute "translateZ";
+
 	setKeyframe -attribute "rotateX";
+
 	setKeyframe -attribute "rotateY";
+
 	setKeyframe -attribute "rotateZ";
+
+
+
+
 
 
 
 	//—— Get worldspace transform info for the current frame ——//
 
-	$worldTranslations = `xform -q -t -ws $node`;
+
+	$worldTranslations = `xform -q -ws -piv $node`;
+
 	$worldRotations = `xform -q -ro -ws $node`;
+
 	
+
 	print ("World location copied. Trans: " 
+
 		+ $worldTranslations[0] + ", "
+
 		+ $worldTranslations[1] + ", "
+
 		+ $worldTranslations[2] + "; "
+
 		+ "Rot: " 
+
 		+ $worldRotations[0] + ", " 
+
 		+ $worldRotations[1] + ", "
+
 		+ $worldRotations[2] + ";" );
+
 	
+
 	
+
 } else {
+
 	
+
 	print( "WARNING: No node selected to copy position of\n" );
+
+
 
 }
